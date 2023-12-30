@@ -28,24 +28,15 @@ const VALUES: &[&str; 18] = &[
 
 fn to_value(value: &str) -> i32 {
     match value {
-        "1" => 1,
-        "one" => 1,
-        "2" => 2,
-        "two" => 2,
-        "3" => 3,
-        "three" => 3,
-        "4" => 4,
-        "four" => 4,
-        "5" => 5,
-        "five" => 5,
-        "6" => 6,
-        "six" => 6,
-        "7" => 7,
-        "seven" => 7,
-        "8" => 8,
-        "eight" => 8,
-        "9" => 9,
-        "nine" => 9,
+        "1" | "one" => 1,
+        "2" | "two" => 2,
+        "3" | "three" => 3,
+        "4" | "four" => 4,
+        "5" | "five" => 5,
+        "6" | "six" => 6,
+        "7" | "seven" => 7,
+        "8" | "eight" => 8,
+        "9" | "nine" => 9,
         _ => panic!("Invalid value: {}", value),
     }
 }
@@ -119,6 +110,26 @@ impl Reader {
     }
 }
 
+fn parse_value(value: &str) -> i32 {
+    let mut reader = Reader::new(VALUES.iter().map(|s| s.to_string()).collect());
+    for char in value.chars() {
+        reader.next(char);
+    }
+
+    reader.first.unwrap() * 10 + reader.second.unwrap()
+}
+
+fn open_file(file_path: &String) -> BufReader<File> {
+    let path = Path::new(file_path);
+
+    let file = match File::open(&path) {
+        Err(why) => panic!("couldn't open {}: {}", path.display(), why),
+        Ok(file) => file,
+    };
+
+    BufReader::new(file)
+}
+
 fn main() {
     let args: Vec<String> = env::args().collect();
 
@@ -127,15 +138,7 @@ fn main() {
         None => panic!("Usage: day1 <input file>"),
     };
 
-    let path = Path::new(file_path);
-    let display = path.display();
-
-    let file = match File::open(&path) {
-        Err(why) => panic!("couldn't open {}: {}", display, why),
-        Ok(file) => file,
-    };
-
-    let mut reader = BufReader::new(file);
+    let mut reader = open_file(file_path);
 
     let mut sum = 0;
 
@@ -154,13 +157,4 @@ fn main() {
     } 
  
     println!("Sum: {}", sum);
-}
-
-fn parse_value(value: &str) -> i32 {
-    let mut reader = Reader::new(VALUES.iter().map(|s| s.to_string()).collect());
-    for char in value.chars() {
-        reader.next(char);
-    }
-
-    reader.first.unwrap() * 10 + reader.second.unwrap()
 }
