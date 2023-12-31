@@ -1,9 +1,13 @@
-use std::io::prelude::*;
-use std::io::BufReader;
-use std::fs::File;
-use std::path::Path;
-use std::env;
 use std::collections::VecDeque;
+
+pub fn parse_value(value: &str) -> i32 {
+    let mut reader = Reader::new(VALUES.iter().map(|s| s.to_string()).collect());
+    for char in value.chars() {
+        reader.next(char);
+    }
+
+    reader.first.unwrap() * 10 + reader.second.unwrap()
+}
 
 const VALUES: &[&str; 18] = &[
     "1",
@@ -108,53 +112,4 @@ impl Reader {
 
         remaining
     }
-}
-
-fn parse_value(value: &str) -> i32 {
-    let mut reader = Reader::new(VALUES.iter().map(|s| s.to_string()).collect());
-    for char in value.chars() {
-        reader.next(char);
-    }
-
-    reader.first.unwrap() * 10 + reader.second.unwrap()
-}
-
-fn open_file(file_path: &String) -> BufReader<File> {
-    let path = Path::new(file_path);
-
-    let file = match File::open(&path) {
-        Err(why) => panic!("couldn't open {}: {}", path.display(), why),
-        Ok(file) => file,
-    };
-
-    BufReader::new(file)
-}
-
-fn main() {
-    let args: Vec<String> = env::args().collect();
-
-    let file_path = match args.get(1) {
-        Some(path) => path,
-        None => panic!("Usage: day1 <input file>"),
-    };
-
-    let mut reader = open_file(file_path);
-
-    let mut sum = 0;
-
-    loop {
-        let mut line = String::new();
-        let len = match reader.read_line(&mut line) {
-            Ok(len) => len,
-            Err(e) => panic!("Error: {}", e),
-        };
-
-        if len == 0 {
-            break;
-        }
-
-        sum += parse_value(&line);
-    } 
- 
-    println!("Sum: {}", sum);
 }
