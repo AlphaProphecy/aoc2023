@@ -100,6 +100,17 @@ fn main() {
                 }
                 continue;
             }
+
+            if char == '*' {
+                symbol_map.last_mut().unwrap().push(Point { x });
+                if !current_number.is_new() {
+                    number_map.last_mut().unwrap().push(current_number.clone());
+                    current_number.reset();
+                }
+                continue;
+            }
+
+
             let parsed_number = try_parse_number(char);
 
             if parsed_number.is_some() {
@@ -108,45 +119,36 @@ fn main() {
                 }
                 current_number.add_number(parsed_number.unwrap());
                 current_number.end = Point { x };
-            } else {
-                symbol_map.last_mut().unwrap().push(Point { x });
-                if !current_number.is_new() {
-                    number_map.last_mut().unwrap().push(current_number.clone());
-                    current_number.reset();
-                }
             }
-
         }
     }
 
     let mut sum = 0;
-    for (index, line) in number_map.iter().enumerate() {
-        for number in line {
+    for (index, line) in symbol_map.iter().enumerate() {
+        for symbol in line {
             let min_index = match index {
                 0 => 0,
                 _ => index - 1,
             } as usize;
 
-            let max_index = min(index + 1, symbol_map.len() - 1);
+            let max_index = min(index + 1, number_map.len() - 1);
 
-            'symbol_loop: for symbol_lines in symbol_map[min_index ..= max_index].iter() {
-                for symbol in symbol_lines {
+            let mut adjacent_numbers: Vec<Number> = Vec::new();
+
+            for number_lines in number_map[min_index ..= max_index].iter() {
+                for number in number_lines {
                     if number.next_to_point(symbol) {
-                        sum += number.value;
-                        break 'symbol_loop;
+                        adjacent_numbers.push(number.clone());
                     }
                 }
+            }
+
+            if adjacent_numbers.len() == 2 {
+                sum += adjacent_numbers[0].value * adjacent_numbers[1].value;
             }
         }
     }
 
-    let max = number_map.iter().map(|line| line.iter().map(|number| number.value).max()).max().unwrap().unwrap();
-    let max_sum = number_map.iter().map(|line| line.iter().map(|number| number.value).sum::<i32>()).sum::<i32>();
-    let number_count = number_map.iter().map(|line| line.len()).sum::<usize>();
-
-    println!("Number count: {}", number_count);
-    println!("Max: {}", max);
-    println!("Max sum: {}", max_sum);
     println!("Sum: {}", sum);
 }
 
