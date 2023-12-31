@@ -112,7 +112,7 @@ pub fn calculate_sum(number_map: Vec<Vec<Number>>, symbol_map: Vec<Vec<Point>>) 
     sum
 }
 
-pub fn try_parse_number(char: char) -> Option<i32> {
+fn try_parse_number(char: char) -> Option<i32> {
     match char {
         '1' => Some(1),
         '2' => Some(2),
