@@ -30,8 +30,8 @@ struct Store {
 }
 
 impl Store {
-    fn is_valid(&self, max: &Store) -> bool {
-        self.red <= max.red && self.green <= max.green && self.blue <= max.blue
+    fn to_power(&self) -> u32 {
+        self.red * self.green * self.blue
     }
 }
 
@@ -47,12 +47,6 @@ fn main() {
 
     let mut sum = 0;
 
-    let max_store = Store {
-        red: 12,
-        green: 13,
-        blue: 14,
-    };
-
     loop {
         let mut line = String::new();
         let len = match reader.read_line(&mut line) {
@@ -66,11 +60,7 @@ fn main() {
 
         let game = parse_line(&line);
 
-        if !game.store.is_valid(&max_store) {
-            continue;
-        }
-
-        sum += game.id;
+        sum += game.store.to_power();
     }
 
     println!("Sum: {}", sum);
