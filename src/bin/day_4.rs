@@ -1,24 +1,10 @@
-use std::io::prelude::*;
-use aoc_2023::file_io::open_file_from_env;
+use aoc_2023::file_io::basic_file_reader;
 use aoc_2023::day_4::*;
 
 fn main() {
-    let mut reader = open_file_from_env("Usage: day_4 <input file>");
-
-    let mut cards = Vec::new();    
-    loop {
-        let mut line = String::new();
-        let len = match reader.read_line(&mut line) {
-            Ok(len) => len,
-            Err(e) => panic!("Error: {}", e),
-        };
-
-        if len == 0 {
-            break;
-        }
-
-        cards.push(parse_line(line));
-    }
+    let cards = basic_file_reader("Usage: day_4 <input file>")
+        .map(|x| parse_line(x))
+        .collect::<Vec<Card>>();
 
     let mut result: Vec<u32> = vec![1; cards.len()];
     for (index, card) in cards.iter().enumerate() {
