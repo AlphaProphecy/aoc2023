@@ -2,21 +2,15 @@ use crate::vectors::intersection;
 
 #[derive(Debug)]
 pub struct Card {
-    pub winners: Vec<u32>,
-    pub deck: Vec<u32>,
+    winners: Vec<u32>,
+    deck: Vec<u32>,
 }
 
 impl Card {
     pub fn calculate_score(&self) -> u32 {
         let duplicates = intersection(&self.winners, &self.deck);
 
-        let length = duplicates.len();
-        if length == 0 {
-            return 0;
-        }
-
-        let base: u32 = 2;
-        base.pow((length as u32) - 1)
+        duplicates.len() as u32
     }       
 }
 
