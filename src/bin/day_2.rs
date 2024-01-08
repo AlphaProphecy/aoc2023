@@ -5,6 +5,6 @@ fn main() {
     let sum = basic_file_reader("Usage: day_2 <input file>")
         .map(|x| parse_line(&x).store.to_power())
         .sum::<u32>();
-        
+
     println!("Sum: {}", sum);
 }

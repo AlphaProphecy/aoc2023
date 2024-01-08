@@ -44,7 +44,7 @@ fn main() {
                     } else {
                         acc.push(vec![*s]);
                     }
-                }, 
+                },
                 None => {
                     acc.push(vec![*s]);
                 }
@@ -52,12 +52,12 @@ fn main() {
             acc
         }).iter().map(|range| IntRange::new(range[0], range[1]))
         .collect::<Vec<IntRange>>();
-    
+
     let v = seed_ranges.iter_mut()
         .map(
-            |range| 
+            |range|
             range.into_iter().map(|i: i64| map_through(&ranges, i)).min().unwrap()
         ).min().unwrap();
 
-    println!("Min location: {:?}", v);      
+    println!("Min location: {:?}", v);
 }

@@ -2,7 +2,7 @@
 pub struct Mapping {
     pub in_start: i64,
     pub out_start: i64,
-    pub range: i64,    
+    pub range: i64,
 }
 
 impl Mapping {
@@ -13,7 +13,7 @@ impl Mapping {
 
     fn in_range(&self, input: i64) -> bool {
         input >= self.in_start && input <= self.in_start + self.range - 1
-    }     
+    }
 }
 
 #[derive(Debug)]
@@ -47,7 +47,7 @@ impl IntRange {
             range,
             count: 0,
         }
-    } 
+    }
 }
 
 impl Iterator for IntRange {

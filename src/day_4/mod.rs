@@ -11,7 +11,7 @@ impl Card {
         let duplicates = intersection(&self.winners, &self.deck);
 
         duplicates.len() as u32
-    }       
+    }
 }
 
 pub fn parse_line(line: String) -> Card {

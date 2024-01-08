@@ -88,7 +88,7 @@ impl Reader {
             if self.options.len() == start_size && self.options.len() != self.start_options.len() {
                 break;
             }
-    
+
             start_size = self.options.len();
         }
     }

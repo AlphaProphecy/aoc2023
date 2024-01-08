@@ -28,7 +28,7 @@ impl Number {
     }
 
     fn next_to_point(&self, point: &Point) -> bool {
-        return self.start.x -1 <= point.x && self.end.x + 1 >= point.x; 
+        return self.start.x -1 <= point.x && self.end.x + 1 >= point.x;
     }
 }
 
