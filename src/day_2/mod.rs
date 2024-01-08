@@ -52,12 +52,8 @@ pub fn parse_line(line: &String) -> Game {
                 "blue" => store.blue = max(count, store.blue),
                 _ => panic!("Unknown color: {}", color),
             }
-
         }
     }
 
-    Game {
-        store,
-        id
-    }
+    Game { store, id }
 }

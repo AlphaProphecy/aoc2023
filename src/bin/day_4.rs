@@ -1,5 +1,5 @@
-use aoc_2023::file_io::basic_file_reader;
 use aoc_2023::day_4::*;
+use aoc_2023::file_io::basic_file_reader;
 
 fn main() {
     let cards = basic_file_reader("Usage: day_4 <input file>")
@@ -11,7 +11,9 @@ fn main() {
         let score = card.calculate_score() as usize;
 
         let previous = result[index];
-        result[index + 1 .. index + score + 1].iter_mut().for_each(|x| *x += previous);
+        result[index + 1..index + score + 1]
+            .iter_mut()
+            .for_each(|x| *x += previous);
     }
 
     let sum = result.iter().sum::<u32>();

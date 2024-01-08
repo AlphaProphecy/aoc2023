@@ -1,7 +1,7 @@
-use aoc_2023::file_io::basic_file_reader;
 use aoc_2023::day_3::*;
+use aoc_2023::file_io::basic_file_reader;
 
-fn main () {
+fn main() {
     let mut symbol_map: Vec<Vec<Point>> = Vec::new();
     let mut number_map: Vec<Vec<Number>> = Vec::new();
 

@@ -83,9 +83,7 @@ pub fn parse_ranges(input: Vec<String>) -> Ranges {
         ranges.push(parse_mapping(&line));
     }
 
-    Ranges {
-        ranges,
-    }
+    Ranges { ranges }
 }
 
 pub fn map_through(ranges: &Vec<Ranges>, input: i64) -> i64 {

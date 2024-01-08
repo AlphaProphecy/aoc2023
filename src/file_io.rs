@@ -1,7 +1,7 @@
-use std::io::{BufReader, BufRead};
-use std::fs::File;
-use std::path::Path;
 use std::env;
+use std::fs::File;
+use std::io::{BufRead, BufReader};
+use std::path::Path;
 
 pub fn open_file(file_path: &String) -> BufReader<File> {
     let path = Path::new(file_path);
@@ -25,7 +25,7 @@ pub fn open_file_from_env(error: &str) -> BufReader<File> {
     open_file(file_path)
 }
 
-pub fn basic_file_reader(error: &str) -> impl Iterator<Item=String> {
+pub fn basic_file_reader(error: &str) -> impl Iterator<Item = String> {
     let reader = open_file_from_env(error);
 
     reader.lines().map(|x| match x {

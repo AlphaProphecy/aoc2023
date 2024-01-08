@@ -28,7 +28,7 @@ impl Number {
     }
 
     fn next_to_point(&self, point: &Point) -> bool {
-        return self.start.x -1 <= point.x && self.end.x + 1 >= point.x;
+        return self.start.x - 1 <= point.x && self.end.x + 1 >= point.x;
     }
 }
 
@@ -96,7 +96,7 @@ pub fn calculate_sum(number_map: Vec<Vec<Number>>, symbol_map: Vec<Vec<Point>>) 
 
             let mut adjacent_numbers: Vec<Number> = Vec::new();
 
-            for number_lines in number_map[min_index ..= max_index].iter() {
+            for number_lines in number_map[min_index..=max_index].iter() {
                 for number in number_lines {
                     if number.next_to_point(symbol) {
                         adjacent_numbers.push(number.clone());

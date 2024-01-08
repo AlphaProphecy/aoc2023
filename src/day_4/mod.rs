@@ -20,12 +20,12 @@ pub fn parse_line(line: String) -> Card {
     let winners = parse_numbers(data.next().unwrap());
     let deck = parse_numbers(data.next().unwrap());
 
-    Card {
-        winners,
-        deck,
-    }
+    Card { winners, deck }
 }
 
 fn parse_numbers(line: &str) -> Vec<u32> {
-    line.trim().split(" ").filter_map(|x| x.parse().ok()).collect::<Vec<u32>>()
+    line.trim()
+        .split(" ")
+        .filter_map(|x| x.parse().ok())
+        .collect::<Vec<u32>>()
 }
