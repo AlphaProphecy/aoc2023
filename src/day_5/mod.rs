@@ -12,8 +12,8 @@ impl Mapping {
     }
 
     fn in_range(&self, input: i64) -> bool {
-        input >= self.in_start && input <= self.in_start + self.range
-    }    
+        input >= self.in_start && input <= self.in_start + self.range - 1
+    }     
 }
 
 #[derive(Debug)]
