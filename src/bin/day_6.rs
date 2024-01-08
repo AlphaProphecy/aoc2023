@@ -8,5 +8,5 @@ fn main() {
 
     let distances = parse_line(file.next().unwrap());
 
-    println!("Wins: {:?}", calculate_wins(times, distances));
+    println!("Wins: {:?}", calculate_wins(vec![times], vec![distances]));
 }
